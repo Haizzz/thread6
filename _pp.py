@@ -19,30 +19,35 @@ class ResultThread(threading.Thread):
             del self._target, self._args, self._kwargs
 
 
-def threaded(fx):
+def threaded(daemon=False):
     """
     A decorator to run a function in a separate thread, this is useful
     when you want to do any IO operations (network request, prints, etc...)
     and want to do something else while waiting for it to finish.
 
     :param fx: the function to run in a separate thread
-    :return: whatever func returns
-    :raises: whatever func raises
+    :param daemon: boolean whether or not to run as a daemon thread
+    :return: whatever fx returns
     """
-    def wrapper(*args, **kwargs):
-        thread = ResultThread(target=fx)
-        thread.start()
-        thread.join()
-        return thread.fx_output
+    def _threaded(fx):
+        def wrapper(*args, **kwargs):
+            thread = ResultThread(target=fx, daemon=daemon,
+                                  args=args, kwargs=kwargs)
+            thread.start()
+            thread.join()
+            return thread.fx_output
+        return wrapper
 
-    return wrapper
+    return _threaded
 
 
-def run_in_thread(fx):
+@threaded(False)
+def run_in_thread(fx, *args, **kwargs):
     """
     Helper function to run a function in a separate thread
-    : param fx: the function to run in a separate thread
-    : return: whatever func returns
-    : raises: whatever func raises
+    :param fx: the function to run in a separate thread
+    :param args: list arguments to pass to fx
+    :param kwargs: dictionary keyword arguments to pass to fx
+    :return: whatever fx returns
     """
-    return threaded(fx)()
+    return fx(*args, **kwargs)
