@@ -1,4 +1,4 @@
-# _pp (_ parallel processing)
+# \_pp (\_ parallel processing)
 Simple parallel processing interface for python
 
 ## Why
