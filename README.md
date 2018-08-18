@@ -9,7 +9,7 @@ Python 3+
 
 ## Installation
 ```shell
-pip install thread6
+$ pip install thread6
 ```
 
 ## Quickstart
