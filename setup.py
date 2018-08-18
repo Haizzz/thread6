@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="thread6",
-    version="0.1.0",
+    version="0.2.0",
     author="Anh Le",
     author_email="hi@imanhle.com",
     description="A plug n play multithreading interface",
