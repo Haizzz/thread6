@@ -51,6 +51,17 @@ class Test_pp(unittest.TestCase):
         # await_output should return function return
         self.assertTrue(a.await_output())
 
+    def test_run_chunked(self):
+        results = []
+
+        def append_nums(nums, arr):
+            arr.extend(nums)
+
+        manager = _pp.run_chunked(append_nums, range(10),
+                                  threads=8, args=[results])
+        self.assertEqual(len(results), 10)
+        self.assertEqual(results, list(range(10)))
+
 
 if __name__ == '__main__':
     unittest.main()
