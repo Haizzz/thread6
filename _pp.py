@@ -65,7 +65,10 @@ class MultiThreadManager(object):
         raised when Thread.start() is called multiple time
         """
         for t in self.threads:
-            t.start()
+            try:
+                t.start()
+            except RuntimeError:
+                pass
 
     def await_output(self):
         """
