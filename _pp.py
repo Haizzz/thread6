@@ -18,6 +18,13 @@ class ResultThread(threading.Thread):
             # an argument that has a member that points to the thread.
             del self._target, self._args, self._kwargs
 
+    def await_output(self):
+        """
+        Wait for the thread to finish and return the return value of fx
+        """
+        self.join()
+        return self.fx_output
+
 
 def threaded(daemon=False):
     """
@@ -34,8 +41,7 @@ def threaded(daemon=False):
             thread = ResultThread(target=fx, daemon=daemon,
                                   args=args, kwargs=kwargs)
             thread.start()
-            thread.join()
-            return thread.fx_output
+            return thread
         return wrapper
 
     return _threaded
@@ -45,6 +51,7 @@ def threaded(daemon=False):
 def run_in_thread(fx, *args, **kwargs):
     """
     Helper function to run a function in a separate thread
+
     :param fx: the function to run in a separate thread
     :param args: list arguments to pass to fx
     :param kwargs: dictionary keyword arguments to pass to fx
