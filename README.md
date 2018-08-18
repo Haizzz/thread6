@@ -8,6 +8,9 @@ Python's built in parallel processing and threading library is pretty simple to 
 Python 3+
 
 ## Installation
+```shell
+pip install thread6
+```
 
 ## Quickstart
 Use the `threaded` decorator to turn a method into a threaded method. That's it!
