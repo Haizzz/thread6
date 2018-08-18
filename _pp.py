@@ -26,6 +26,60 @@ class ResultThread(threading.Thread):
         return self.fx_output
 
 
+class MultiThreadManager(object):
+    """
+    A manager to manage the execution of multiple threads. Provide
+    method to return a list of return values
+    """
+    threads = []
+
+    def __init__(self, threads=[]):
+        """
+        Initialise a MultiThreadManager
+
+        :param threads: a list of ResultThread objects
+        :return: None
+        """
+        self.threads = threads
+
+    def add_thread(self, thread):
+        """
+        Add a thread for this manager to manage
+
+        :param thread: a ResultThread object
+        :return: None
+        """
+        self.threads.append(thread)
+
+    def get_threads(self):
+        """
+        Return a list of threads this manager is managing
+
+        :return: list of ResultThread objects
+        """
+        return self.threads
+
+    def start_all(self):
+        """
+        Attempt to start all threads. This will ignore the RunTimeError
+        raised when Thread.start() is called multiple time
+        """
+        for t in self.threads:
+            t.start()
+
+    def await_output(self):
+        """
+        Wait for all threads to finish executing and return a list
+        of all return values
+
+        :return: list of objects
+        """
+        results = []
+        for t in self.threads:
+            results.append(t.await_output())
+        return results
+
+
 def threaded(daemon=False):
     """
     A decorator to run a function in a separate thread, this is useful
@@ -58,3 +112,28 @@ def run_in_thread(fx, *args, **kwargs):
     :return: whatever fx returns
     """
     return fx(*args, **kwargs)
+
+
+def run_chunked(fx, dataset, threads=8, *args, **kwargs):
+    """
+    Given an list of data, split it into smaller chunks
+    and feed it to the processing function(fx) to be runned
+    in separate threads. fx must take arguments in the format:
+
+    fx(list, *args, **kwargs)
+
+    :param fx: the processing function to run
+    :param dataset: list to split
+    :param split_into: int how many threads to use when splitting
+                       the dataset and running the function
+    :return: an instance of _pp.MultiThreadManager
+    """
+    # number of chunks <= number of threads
+    chunks = []
+    for i in range(0, len(dataset), threads):
+        chunks.append(dataset[i:i + threads])
+    manager = MultiThreadManager()
+    for chunk in chunks:
+        manager.add_thread(run_in_thread(fx, chunk, *args, **kwargs))
+
+    return manager

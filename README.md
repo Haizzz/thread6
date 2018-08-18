@@ -8,4 +8,5 @@ Python's built in parallel processing and threading library are pretty simple to
 - [x] threaded function decorator
 - [x] run something in a separate thread function
 - [ ] split data into chunk and run in separate threads
+- [ ] auto spawn to run fx on a set of data
 - [ ] explore multi processing?
