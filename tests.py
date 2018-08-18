@@ -61,6 +61,11 @@ class Test_pp(unittest.TestCase):
                                   threads=8, args=[results])
         self.assertEqual(len(results), 10)
         self.assertEqual(results, list(range(10)))
+        # test manager methods
+        self.assertEqual(len(manager.get_threads()), 10 % 8)
+        # method smoke tests
+        manager.start_all()
+        manager.await_output()
 
 
 if __name__ == '__main__':
