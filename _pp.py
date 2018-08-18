@@ -114,7 +114,7 @@ def run_threaded(fx, *args, **kwargs):
     return fx(*args, **kwargs)
 
 
-def run_chunked(fx, dataset, threads=8, *args, **kwargs):
+def run_chunked(fx, dataset, threads=8, args=(), kwargs={}):
     """
     Given an list of data, split it into smaller chunks
     and feed it to the processing function(fx) to be runned
@@ -124,8 +124,10 @@ def run_chunked(fx, dataset, threads=8, *args, **kwargs):
 
     :param fx: the processing function to run
     :param dataset: list to split
-    :param split_into: int how many threads to use when splitting
-                       the dataset and running the function
+    :param threads: int how many threads to use when splitting
+                    the dataset and running the function
+    :param args: list of arguments to pass to fx
+    :param kwargs: dictionary of keyword arguments to pass to fx
     :return: an instance of _pp.MultiThreadManager
     """
     # number of chunks <= number of threads
