@@ -1,7 +1,7 @@
 # \_pp (\_ parallel processing)
 Simple parallel processing interface for python
 
-## Why
+## Why?
 Python's built in parallel processing and threading library is pretty simple to implement but sometimes you just want to chuck data at a function and make it run faster
 
 ## Requirements
