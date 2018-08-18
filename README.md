@@ -1,4 +1,4 @@
-# \_pp (\_ parallel processing)
+# thread6
 Simple parallel processing interface for python
 
 ## Why?
@@ -12,7 +12,7 @@ Python 3+
 ## Quickstart
 Use the `threaded` decorator to turn a method into a threaded method. That's it!
 ```python
-@_pp.threaded()
+@thread6.threaded()
 def threaded_print():
     print("")
     return 1
@@ -20,7 +20,7 @@ def threaded_print():
 
 Alternatively, use `run_threaded` function
 ```python
-_pp.run_threaded(threaded_print)
+thread6.run_threaded(threaded_print)
 ```
 
 Both the `threaded` decorator and `run_threaded` method will return an instance of
@@ -37,7 +37,7 @@ def update_items(items):
     ...
 
 items = [...]
-run_chunked(update_items, items)
+thread6.run_chunked(update_items, items)
 ```
 `.await_output()` also work with `run_chunked` but will return a list of return values instead
 

@@ -1,16 +1,16 @@
 import unittest
 import time
-import _pp
+import thread6
 
 
-class Test_pp(unittest.TestCase):
+class TestThread6(unittest.TestCase):
     def setUp(self):
         pass
 
     def test_threaded_decorator(self):
         result = []
 
-        @_pp.threaded(False)
+        @thread6.threaded(False)
         def append_x(arr):
             time.sleep(1)
             arr.append("x")
@@ -39,7 +39,7 @@ class Test_pp(unittest.TestCase):
             return True
 
         # start the threaded function call
-        a = _pp.run_threaded(append_x, result)
+        a = thread6.run_threaded(append_x, result)
         result.append("y")
         # y should be appended first then x since main thread
         # is not waiting for x to finish
@@ -57,8 +57,8 @@ class Test_pp(unittest.TestCase):
         def append_nums(nums, arr):
             arr.extend(nums)
 
-        manager = _pp.run_chunked(append_nums, range(10),
-                                  threads=8, args=[results])
+        manager = thread6.run_chunked(append_nums, range(10),
+                                      threads=8, args=[results])
         self.assertEqual(len(results), 10)
         self.assertEqual(results, list(range(10)))
         # test manager methods
