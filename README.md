@@ -2,7 +2,7 @@
 Simple parallel processing interface for python
 
 ## Why
-Python's built in parallel processing and threading library are pretty simple to implement but sometimes you just want to chuck data at a function and make it run faster
+Python's built in parallel processing and threading library is pretty simple to implement but sometimes you just want to chuck data at a function and make it run faster
 
 ## Requirements
 Python 3+
@@ -10,7 +10,7 @@ Python 3+
 ## Installation
 
 ## Quickstart
-Use the `threaded` decorator to turn a method into a threaded method
+Use the `threaded` decorator to turn a method into a threaded method. That's it!
 ```python
 @_pp.threaded()
 def threaded_print():
@@ -30,6 +30,16 @@ and get the return value. To get the return value, use `.await_output()`
 result = threaded_print()
 result.await_output()  # this will return 1
 ```
+
+If you have a function that needs to execute on a large list of data, use `run_chunked`
+```python
+def update_items(items):
+    ...
+
+items = [...]
+run_chunked(update_items, items)
+```
+`.await_output()` also work with `run_chunked` but will return a list of return values instead
 
 ## Usage
 
