@@ -39,7 +39,7 @@ class Test_pp(unittest.TestCase):
             return True
 
         # start the threaded function call
-        a = _pp.run_in_thread(append_x, result)
+        a = _pp.run_threaded(append_x, result)
         result.append("y")
         # y should be appended first then x since main thread
         # is not waiting for x to finish

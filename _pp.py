@@ -102,7 +102,7 @@ def threaded(daemon=False):
 
 
 @threaded(False)
-def run_in_thread(fx, *args, **kwargs):
+def run_threaded(fx, *args, **kwargs):
     """
     Helper function to run a function in a separate thread
 
@@ -134,6 +134,6 @@ def run_chunked(fx, dataset, threads=8, *args, **kwargs):
         chunks.append(dataset[i:i + threads])
     manager = MultiThreadManager()
     for chunk in chunks:
-        manager.add_thread(run_in_thread(fx, chunk, *args, **kwargs))
+        manager.add_thread(run_threaded(fx, chunk, *args, **kwargs))
 
     return manager
