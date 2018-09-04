@@ -105,3 +105,6 @@ venv.bak/
 
 # muckaround playground file
 playground.py
+
+# vscode file
+.vscode
