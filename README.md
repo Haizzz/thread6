@@ -44,7 +44,11 @@ thread6.run_chunked(update_items, items)
 ```
 `.await_output()` also work with `run_chunked` but will return a list of return values instead
 
-## Usage
+## Run the tests
+Run tests with
+```python
+python tests.py
+```
 
 
 ## Todo
