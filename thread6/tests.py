@@ -22,12 +22,22 @@ class TestThread6(unittest.TestCase):
         # y should be appended first then x since main thread
         # is not waiting for x to finish
         self.assertEqual(result[0], "y")
-        time.sleep(2)
+        # await_output should return function return
+        self.assertTrue(a.await_output())
         # x should now be appended
         self.assertEqual(len(result), 2)
         self.assertEqual(result[1], "x")
-        # await_output should return function return
-        self.assertTrue(a.await_output())
+
+    def test_get_error(self):
+        @thread6.threaded(False)
+        def raise_error():
+            raise ValueError()
+            return True
+
+        # start the threaded function call
+        x = raise_error()
+        err = x.get_error()
+        self.assertTrue(err is not None)
 
     def test_run_in_thread(self):
         # should do the same thing as the threaded decorator
