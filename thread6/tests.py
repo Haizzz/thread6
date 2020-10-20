@@ -22,7 +22,7 @@ class TestThread6(unittest.TestCase):
         # y should be appended first then x since main thread
         # is not waiting for x to finish
         self.assertEqual(result[0], "y")
-        time.sleep(1)
+        time.sleep(2)
         # x should now be appended
         self.assertEqual(len(result), 2)
         self.assertEqual(result[1], "x")
