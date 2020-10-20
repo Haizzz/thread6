@@ -8,11 +8,14 @@ class ResultThread(threading.Thread):
     runned inside it
     """
     fx_output = None
+    error = None
 
     def run(self, *args, **kwargs):
         try:
             if self._target:
                 self.fx_output = self._target(*self._args, **self._kwargs)
+        except e:
+            self.error = e
         finally:
             # Avoid a refcycle if the thread is running a function with
             # an argument that has a member that points to the thread.
@@ -24,6 +27,13 @@ class ResultThread(threading.Thread):
         """
         self.join()
         return self.fx_output
+
+    def get_error(self):
+        """
+        Return error if any, return None if no error occured
+        """
+        self.join()
+        return self.error
 
 
 class MultiThreadManager(object):
