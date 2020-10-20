@@ -14,7 +14,7 @@ class ResultThread(threading.Thread):
         try:
             if self._target:
                 self.fx_output = self._target(*self._args, **self._kwargs)
-        except e:
+        except Exception as e:
             self.error = e
         finally:
             # Avoid a refcycle if the thread is running a function with
